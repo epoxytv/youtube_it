@@ -360,6 +360,7 @@ class YouTubeIt
           :upload_views   => entry.at_xpath("yt:statistics")["totalUploadViews"],
           :insight_uri    => (entry.at_xpath('xmlns:link[@rel="http://gdata.youtube.com/schemas/2007#insight.views"]')['href'] rescue nil),
           :channel_uri    => (entry.at_xpath('xmlns:link[@rel="alternate"]')['href'] rescue nil),
+          :title          => (entry.at_xpath("title").text rescue nil)
         )
       end
     end
