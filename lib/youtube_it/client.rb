@@ -185,9 +185,10 @@ class YouTubeIt
       client.get_activity(user, opts)
     end
     
-    # Fetches a user's sup update key from the activity feed.
-    def activity_sup_key(user = nil, opts = {})
-      client.get_activity_sup_key(user, opts)      
+    # Fetches a user's metadata from the activity feed, results returned in a
+    # hash potentially containing :sup_key, :user_id.
+    def user_metadata(user = nil, opts = {})
+      client.get_user_metadata(user, opts)
     end
 
     def watchlater(user = nil)

@@ -245,13 +245,17 @@ class YouTubeIt
     end
     
     # Returns a user's activity SUP update key
-    class ActivitySupKeyParser < FeedParser
+    class UserMetadataParser < FeedParser
       def parse_content(content)
-        doc = REXML::Document.new(content.body)
-        updates_link = doc.elements["/feed/link[@rel='updates']"]
-        if updates_link
-          updates_link.attributes["href"].split("#").last
+        doc = Nokogiri::XML(content.body)
+        metadata = {}
+        if updates_link = doc.css("link[@rel='updates']")
+          metadata[:sup_key] = updates_link.attr("href").text.split("#").last
         end
+        if user_id = doc.css("entry author yt|userId").first
+          metadata[:user_id] = user_id.text
+        end
+        metadata
       end
     end
 
