@@ -243,7 +243,7 @@ class YouTubeIt
         return videos
       end
     end
-    
+
     # Returns a user's activity SUP update key
     class UserMetadataParser < FeedParser
       def parse_content(content)
@@ -268,6 +268,9 @@ class YouTubeIt
         entry = doc.at("entry")
         profile = {}
         profile[:title] = entry.at("title").inner_text
+        if user_id = doc.css("entry author yt|userId").first
+          profile[:user_id] = user_id.text
+        end
         ytstats = entry.at_xpath("yt:statistics")
         profile[:view_count] = ytstats["viewCount"]
         profile[:video_watch_count] = ytstats["videoWatchCount"]
