@@ -243,6 +243,17 @@ class YouTubeIt
         return videos
       end
     end
+    
+    # Returns a user's activity SUP update key
+    class ActivitySupKeyParser < FeedParser
+      def parse_content(content)
+        doc = REXML::Document.new(content.body)
+        updates_link = doc.elements["/feed/link[@rel='updates']"]
+        if updates_link
+          updates_link.attributes["href"].split("#").last
+        end
+      end
+    end
 
     # Returns an array of the user's contacts
     class ContactsParser < FeedParser

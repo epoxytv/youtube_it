@@ -184,6 +184,11 @@ class YouTubeIt
     def activity(user = nil, opts = {})
       client.get_activity(user, opts)
     end
+    
+    # Fetches a user's sup update key from the activity feed.
+    def activity_sup_key(user = nil, opts = {})
+      client.get_activity_sup_key(user, opts)      
+    end
 
     def watchlater(user = nil)
       client.watchlater(user)

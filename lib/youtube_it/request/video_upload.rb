@@ -342,6 +342,14 @@ class YouTubeIt
 
         return YouTubeIt::Parser::ActivityParser.new(response).parse
       end
+      
+      def get_activity_sup_key(user, opts)
+        activity_url = "/feeds/api/users/%s/events?v=2" % (user ? user : "default")
+        activity_url << opts.collect { |k,p| [k,p].join '=' }.join('&')
+        response = yt_session.get(activity_url)
+        
+        return YouTubeIt::Parser::ActivitySupKeyParser.new(response).parse
+      end
 
       def watchlater(user)
         watchlater_url = "/feeds/api/users/%s/watch_later?v=#{YouTubeIt::API_VERSION}" % (user ? user : "default")
