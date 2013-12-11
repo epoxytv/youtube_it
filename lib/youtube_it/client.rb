@@ -191,6 +191,12 @@ class YouTubeIt
       client.get_user_metadata(user, opts)
     end
 
+    # Fetches a user's (single) profile entry from the profile feed, results returned in a
+    # hash potentially containing TBD
+    def user_profile(user = nil, opts = {})
+      client.get_user_profile(user, opts)
+    end
+
     def watchlater(user = nil)
       client.watchlater(user)
     end

@@ -259,6 +259,24 @@ class YouTubeIt
       end
     end
 
+    # Currently, title and stats
+    # TODO: The user model class gets some of this,
+    # but skips title... so keep separate for now
+    class UserProfileParser < FeedParser
+      def parse_content(content)
+        doc = Nokogiri::XML(content.body)
+        entry = doc.at("entry")
+        profile = {}
+        profile[:title] = entry.at("title").inner_text
+        ytstats = entry.at_xpath("yt:statistics")
+        profile[:view_count] = ytstats["viewCount"]
+        profile[:video_watch_count] = ytstats["videoWatchCount"]
+        profile[:subscriber_count] = ytstats["subscriberCount"]
+        profile[:total_upload_views] = ytstats["totalUploadViews"]
+        profile
+      end
+    end
+
     # Returns an array of the user's contacts
     class ContactsParser < FeedParser
       def parse_content(content)

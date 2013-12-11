@@ -351,6 +351,15 @@ class YouTubeIt
         return YouTubeIt::Parser::UserMetadataParser.new(response).parse
       end
 
+      def get_user_profile(user, opts)
+        # According to docs, this doesn't take v=2 param
+        profile_url = "/feeds/api/users/%s" % (user ? user : "default")
+        profile_url << opts.collect { |k,p| [k,p].join '=' }.join('&')
+        response = yt_session.get(profile_url)
+        
+        return YouTubeIt::Parser::UserProfileParser.new(response).parse
+      end
+
       def watchlater(user)
         watchlater_url = "/feeds/api/users/%s/watch_later?v=#{YouTubeIt::API_VERSION}" % (user ? user : "default")
         response = yt_session.get(watchlater_url)
