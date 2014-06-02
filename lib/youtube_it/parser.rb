@@ -108,6 +108,12 @@ class YouTubeIt
       protected
 
       def parse_entry(entry)
+        count_hint = begin
+          # Not sure if yt:countHint always present, so assume not for now
+          entry.at_xpath('yt:countHint').text
+        rescue
+          nil
+        end
         YouTubeIt::Model::Playlist.new(
           :title         => entry.at("title").text,
           :summary       => (entry.at("summary") || entry.at_xpath("media:group").at_xpath("media:description")).text,
@@ -115,7 +121,8 @@ class YouTubeIt
           :playlist_id   => entry.at("id").text[/playlist([^<]+)/, 1].sub(':',''),
           :published     => entry.at("published") ? entry.at("published").text : nil,
           :response_code => nil,
-          :xml           => nil)
+          :xml           => nil,
+          :count_hint    => count_hint)
       end
     end
 
