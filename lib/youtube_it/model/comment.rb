@@ -7,6 +7,9 @@ class YouTubeIt
       attr_reader :author
       attr_reader :channel_id
       attr_reader :gp_user_id
+      attr_reader :reply_to
+      attr_reader :reply_count
+      attr_reader :video_id
 
       # unique ID of the comment.
       def unique_id
