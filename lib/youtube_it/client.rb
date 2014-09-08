@@ -184,7 +184,7 @@ class YouTubeIt
     def activity(user = nil, opts = {})
       client.get_activity(user, opts)
     end
-    
+
     # Fetches a user's metadata from the activity feed, results returned in a
     # hash potentially containing :sup_key, :user_id.
     def user_metadata(user = nil, opts = {})
@@ -273,8 +273,8 @@ class YouTubeIt
       client.unsubscribe_channel(subscription_id)
     end
 
-    def subscriptions(user_id = nil)
-      client.subscriptions(user_id)
+    def subscriptions(user_id = nil, opts = {})
+      client.subscriptions(user_id, opts)
     end
 
     def enable_http_debugging

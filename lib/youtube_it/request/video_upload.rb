@@ -342,12 +342,12 @@ class YouTubeIt
 
         return YouTubeIt::Parser::ActivityParser.new(response).parse
       end
-      
+
       def get_user_metadata(user, opts)
         activity_url = "/feeds/api/users/%s/events?v=2" % (user ? user : "default")
         activity_url << opts.collect { |k,p| [k,p].join '=' }.join('&')
         response = yt_session.get(activity_url)
-        
+
         return YouTubeIt::Parser::UserMetadataParser.new(response).parse
       end
 
@@ -356,7 +356,7 @@ class YouTubeIt
         profile_url = "/feeds/api/users/%s" % (user ? user : "default")
         profile_url << opts.collect { |k,p| [k,p].join '=' }.join('&')
         response = yt_session.get(profile_url)
-        
+
         return YouTubeIt::Parser::UserProfileParser.new(response).parse
       end
 
@@ -464,8 +464,9 @@ class YouTubeIt
         return {:code => response.status, :body => response.body}
       end
 
-      def subscriptions(user)
+      def subscriptions(user, opts = {})
         subscription_url = "/feeds/api/users/%s/subscriptions?v=#{YouTubeIt::API_VERSION}" % (user ? user : "default")
+        subscription_url << (opts.empty? ? '' : '&' + opts.to_param)
         response         = yt_session.get(subscription_url)
 
         return YouTubeIt::Parser::SubscriptionFeedParser.new(response).parse
