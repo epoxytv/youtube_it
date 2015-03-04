@@ -288,7 +288,7 @@ class YouTubeIt
         profile[:video_watch_count] = ytstats["videoWatchCount"]
         profile[:subscriber_count] = ytstats["subscriberCount"]
         profile[:total_upload_views] = ytstats["totalUploadViews"]
-        profile[:upload_count] = ytstats["uploadCount"]
+        profile[:upload_count] = (entry.at_xpath('gd:feedLink[@rel="http://gdata.youtube.com/schemas/2007#user.uploads"]')['countHint'].to_i rescue nil)
         profile
       end
     end
